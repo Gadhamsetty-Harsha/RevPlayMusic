@@ -1,7 +1,7 @@
 # 🎧 P2 – RevPlay
 
 ## 📌 Overview
-RevPlay is a full-stack monolithic music streaming web application. Users explore songs, artists, playlists, albums, and podcasts through a responsive web interface. Users search music, mark favorites, manage playlists, and play songs using an integrated web music player. Artists create profiles, upload music, manage albums, and track engagement analytics. The system supports role-based access, responsive UI, and scalable backend architecture.
+RevPlayMusic is a full-stack monolithic music streaming web application. Users explore songs, artists, playlists, albums, and podcasts through a responsive web interface. Users search music, mark favorites, manage playlists, and play songs using an integrated web music player. Artists create profiles, upload music, manage albums, and track engagement analytics. The system supports role-based access, responsive UI, and scalable backend architecture.
 
 ## 🎯 Core Features
 
