@@ -119,6 +119,179 @@ Artists include all listener features plus the following capabilities.
 - 🪵 Log4J
 - 🌿 Git
 
+---
+
+# 📊 Database ER Diagram
+
+The database schema models users, artists, songs, albums, playlists, podcasts, favorites, and listening history.
+
+```mermaid
+erDiagram
+
+    USERS {
+        BIGINT user_id PK
+        VARCHAR user_name
+        VARCHAR email
+        VARCHAR user_password
+        ENUM role
+        TEXT bio
+        VARCHAR profile_image
+        VARCHAR security_question
+        VARCHAR security_answer
+        TIMESTAMP created_at
+    }
+
+    ARTISTS {
+        BIGINT artist_id PK
+        BIGINT user_id FK
+        VARCHAR artist_name
+        TEXT bio
+        VARCHAR genre
+        VARCHAR banner_image
+        VARCHAR instagram_link
+        VARCHAR twitter_link
+        VARCHAR spotify_link
+        VARCHAR website_link
+    }
+
+    ALBUMS {
+        BIGINT album_id PK
+        BIGINT artist_id FK
+        VARCHAR title
+        TEXT description
+        DATE release_date
+        VARCHAR cover_image
+        TIMESTAMP created_at
+    }
+
+    SONGS {
+        BIGINT song_id PK
+        BIGINT artist_id FK
+        BIGINT album_id FK
+        VARCHAR title
+        VARCHAR genre
+        INT duration
+        VARCHAR audio_file_path
+        BIGINT play_count
+        BIGINT like_count
+        DATE release_date
+        TIMESTAMP created_at
+    }
+
+    PODCASTS {
+        BIGINT podcast_id PK
+        BIGINT artist_id FK
+        VARCHAR title
+        TEXT description
+        VARCHAR category
+        VARCHAR cover_image
+        TIMESTAMP created_at
+    }
+
+    PODCAST_EPISODES {
+        BIGINT episode_id PK
+        BIGINT podcast_id FK
+        VARCHAR title
+        TEXT description
+        INT duration
+        VARCHAR audio_file_path
+        DATE release_date
+        BIGINT play_count
+        TIMESTAMP created_at
+    }
+
+    FAVORITES {
+        BIGINT user_id FK
+        BIGINT song_id FK
+        TIMESTAMP added_at
+    }
+
+    PLAYLISTS {
+        BIGINT playlist_id PK
+        BIGINT user_id FK
+        VARCHAR name
+        TEXT description
+        ENUM privacy
+        TIMESTAMP created_at
+    }
+
+    PLAYLIST_SONGS {
+        BIGINT playlist_id FK
+        BIGINT song_id FK
+        INT position
+    }
+
+    LISTENING_HISTORY {
+        BIGINT history_id PK
+        BIGINT user_id FK
+        BIGINT song_id FK
+        TIMESTAMP played_at
+    }
+
+    USERS ||--|| ARTISTS : "artist profile"
+    ARTISTS ||--o{ ALBUMS : creates
+    ARTISTS ||--o{ SONGS : uploads
+    ALBUMS ||--o{ SONGS : contains
+
+    USERS ||--o{ FAVORITES : likes
+    SONGS ||--o{ FAVORITES : favorited
+
+    USERS ||--o{ PLAYLISTS : creates
+    PLAYLISTS ||--o{ PLAYLIST_SONGS : contains
+    SONGS ||--o{ PLAYLIST_SONGS : included_in
+
+    USERS ||--o{ LISTENING_HISTORY : listens
+    SONGS ||--o{ LISTENING_HISTORY : played
+```
+### ER Diagram
+
+![RevPlay ER Diagram](RevPlay_ERD.jpeg)
+---
+
+# 🏗️ Spring Boot Architecture
+
+RevPlay follows a layered architecture using Spring Boot.
+
+### Layers
+
+Client Layer  
+Web browser interface and music player.
+
+Controller Layer  
+Handles HTTP requests.
+
+Examples:
+- UserController
+- SongController
+- PlaylistController
+- ArtistController
+
+Service Layer  
+Contains business logic.
+
+Examples:
+- UserService
+- SongService
+- PlaylistService
+- ArtistService
+
+Repository Layer  
+Handles database operations.
+
+Examples:
+- UserRepository
+- SongRepository
+- PlaylistRepository
+- AlbumRepository
+
+Database Layer  
+MySQL database storing all application data.
+
+### Architecture Diagram
+
+![RevPlay Architecture](RevPlay_Architecture.jpeg)
+---
+
 ## 🚀 Key Highlights
 - Full-stack music streaming platform
 - Integrated web music player
@@ -128,4 +301,4 @@ Artists include all listener features plus the following capabilities.
 - Scalable layered architecture
 
 ---
-RevPlay = Revature + Player 🎧🎶
+RevPlay = Revature + MusicPlayer 🎧🎶
